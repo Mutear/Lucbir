@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
  * Created by VewnyoWang on 2016/7/8.
  */
 public class UniformLBP implements Feature{
+    public final static String FEATURE_NAME = "ulbp";
+
     private int[] featureVector = null;
 
     public static void main(String[] args) {
@@ -139,5 +141,9 @@ public class UniformLBP implements Feature{
 
     public void index2feature(String index) {
         this.featureVector = Util.string2vector(index);
+    }
+
+    public String getFeatureName() {
+        return UniformLBP.FEATURE_NAME;
     }
 }

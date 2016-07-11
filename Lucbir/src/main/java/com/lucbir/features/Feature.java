@@ -13,4 +13,5 @@ public interface Feature {
     public String feature2index();
     /** 将索引字符串转换为特征值 */
     public void index2feature(String index);
+    public String getFeatureName();
 }

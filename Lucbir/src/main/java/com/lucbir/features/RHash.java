@@ -12,6 +12,8 @@ import java.awt.image.BufferedImage;
  * Created by VenyoWang on 2016/7/8.
  */
 public class RHash implements Feature{
+    public final static String FEATURE_NAME = "rhash";
+
     private String featureValue = null;
 
     public static void main(String[] args) {
@@ -115,5 +117,9 @@ public class RHash implements Feature{
 
     public void index2feature(String index) {
         this.featureValue = index;
+    }
+
+    public String getFeatureName() {
+        return RHash.FEATURE_NAME;
     }
 }

@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
  * Created by VenyoWang on 2016/7/8.
  */
 public class ColorCoherenceVector implements Feature{
+    public final static String FEATURE_NAME = "ccv";
+
     private static int BIN_WIDTH = 4;
     /**
      * 该特征提取算法处理的图像的固定宽高<br>
@@ -197,5 +199,9 @@ public class ColorCoherenceVector implements Feature{
 
     public void index2feature(String index) {
         this.featureMatrix = Util.string2matrix(index, 256 / ColorCoherenceVector.BIN_WIDTH, 2);
+    }
+
+    public String getFeatureName() {
+        return ColorCoherenceVector.FEATURE_NAME;
     }
 }

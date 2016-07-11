@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
  * Created by VenyoWang on 2016/7/8.
  */
 public class RGBColorHistogram implements Feature{
+    public final static String FEATURE_NAME = "rgbch";
+
     private int[][] featureMatrix = null;
 
     public static void main(String[] args) {
@@ -55,5 +57,9 @@ public class RGBColorHistogram implements Feature{
 
     public void index2feature(String index) {
         this.featureMatrix = Util.string2matrix(index, 3, 256);
+    }
+
+    public String getFeatureName() {
+        return RGBColorHistogram.FEATURE_NAME;
     }
 }

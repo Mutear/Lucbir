@@ -23,6 +23,8 @@ import java.util.Map;
  * Created by VenyoWang on 2016/7/8.
  */
 public class AnnularColorLayoutHistogram implements Feature{
+    public final static String FEATURE_NAME = "aclh";
+
     /** 同心圆个数 */
     private final static int N = 10;
     /**
@@ -162,5 +164,9 @@ public class AnnularColorLayoutHistogram implements Feature{
 
     public void index2feature(String index) {
         this.featureMatrix = Util.string2matrix(index, 256, AnnularColorLayoutHistogram.N);
+    }
+
+    public String getFeatureName() {
+        return AnnularColorLayoutHistogram.FEATURE_NAME;
     }
 }

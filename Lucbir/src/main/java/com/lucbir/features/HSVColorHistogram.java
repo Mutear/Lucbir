@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
  * Created by VenyoWang on 2016/7/8.
  */
 public class HSVColorHistogram implements Feature{
+    public final static String FEATURE_NAME = "hsvch";
+
     /**
      * 该特征提取算法处理的图像的固定宽高<br>
      * 即在特征提取前，需要先把图像重置为固定尺寸
@@ -83,5 +85,9 @@ public class HSVColorHistogram implements Feature{
 
     public void index2feature(String index) {
 
+    }
+
+    public String getFeatureName() {
+        return HSVColorHistogram.FEATURE_NAME;
     }
 }

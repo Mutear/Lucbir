@@ -28,6 +28,12 @@
             <artifactId>lucene-core</artifactId>
             <version>6.1.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analyzers-common -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>6.1.0</version>
+        </dependency>
 
     </dependencies>
 </project>
