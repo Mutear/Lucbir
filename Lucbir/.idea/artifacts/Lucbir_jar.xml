@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Lucbir:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Lucbir_jar</output-path>
+    <root id="archive" name="Lucbir.jar">
+      <element id="module-output" name="Lucbir" />
+      <element id="library" level="project" name="Maven: org.apache.lucene:lucene-analyzers-common:6.1.0" />
+      <element id="library" level="project" name="Maven: org.apache.lucene:lucene-core:6.1.0" />
+    </root>
+  </artifact>
+</component>
