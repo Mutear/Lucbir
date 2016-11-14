@@ -30,8 +30,8 @@ public class RHash implements Feature{
      * @return
      */
     private String getFeature(int[][] matrix, double average) {
-        // 半径
         String featureValue = "";
+        // 半径
         int[] r = {2, 4, 6, 8};
         for(int i = 0; i < 4; i++){
             // 正方形左上角的点的下标

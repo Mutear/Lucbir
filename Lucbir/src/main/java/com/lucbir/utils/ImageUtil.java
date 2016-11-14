@@ -12,62 +12,76 @@ import javax.imageio.ImageIO;
  */
 public class ImageUtil {
     public static Pixel[][] getImagePixel(BufferedImage srcImg, int width, int height) {
-        BufferedImage bi = null;
-        try {
-            bi = resizeImage(srcImg, width, height, BufferedImage.TYPE_INT_RGB);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        int minx = bi.getMinX();
-        int miny = bi.getMinY();
+    	Pixel[][] colors = shrinkBitmap(srcImg, width, height);
+        int minx = 0;
+        int miny = 0;
         Pixel[][] rgbMatrix = new Pixel[width - minx][height - miny];
         for (int i = minx; i < width; i++) {
             for (int j = miny; j < height; j++) {
-                int pixel = bi.getRGB(i, j);
-                int red = (pixel & 0xff0000) >> 16;
-                int green = (pixel & 0xff00) >> 8;
-                int blue = (pixel & 0xff);
-                Pixel p = new Pixel();
-                p.red = red;
-                p.green = green;
-                p.blue = blue;
-                rgbMatrix[i - minx][j - miny] = p;
+            	Pixel pixel = colors[i][j];
+                rgbMatrix[i - minx][j - miny] = pixel;
             }
         }
         return rgbMatrix;
     }
 
     public static int[][] getGrayPixel(BufferedImage srcImg, int width, int height) {
-        BufferedImage bi = null;
-        try {
-            bi = resizeImage(srcImg, width, height, BufferedImage.TYPE_INT_RGB);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        int minx = bi.getMinX();
-        int miny = bi.getMinY();
+    	Pixel[][] colors = shrinkBitmap(srcImg, width, height);
+        int minx = 0;
+        int miny = 0;
         int[][] matrix = new int[width - minx][height - miny];
         for (int i = minx; i < width; i++) {
             for (int j = miny; j < height; j++) {
-                int pixel = bi.getRGB(i, j);
-                int red = (pixel & 0xff0000) >> 16;
-                int green = (pixel & 0xff00) >> 8;
-                int blue = (pixel & 0xff);
-                int gray = (int) (red * 0.3 + green * 0.59 + blue * 0.11);
+            	Pixel pixel = colors[i][j];
+                int gray = (int) (pixel.red * 0.3 + pixel.green * 0.59 + pixel.blue * 0.11);
                 matrix[i][j] = gray;
             }
         }
         return matrix;
     }
-
-    public static BufferedImage resizeImage(BufferedImage srcImg, int width, int height, int imageType)
-            throws IOException {
-        if(srcImg == null) return null;
-        BufferedImage buffImg = new BufferedImage(width, height, imageType);
-        buffImg.getGraphics().drawImage(srcImg.getScaledInstance(width, height, Image.SCALE_SMOOTH), 0, 0, null);
-        return buffImg;
+    
+    public static Pixel[][] shrinkBitmap(BufferedImage srcImg, int width, int height)
+    {
+        if (srcImg != null)
+        {
+            int imgHeight = srcImg.getHeight();
+            int imgWidth = srcImg.getWidth();
+            if (imgHeight < height || imgWidth < width)
+            {
+                return null;
+            }
+            else
+            {
+            	Pixel[][] colors = new Pixel[height][width];
+                double u = (double)imgHeight / height;
+                double v = (double)imgWidth / width;
+                for (int i = 0; i < height; i++)
+                {
+                    for (int j = 0; j < width; j++)
+                    {
+                        double x = u * i;
+                        double y = v * j;
+                        int x1 = (int)x, y1 = (int)y, x2 = (int)(x + u), y2 = (int)(y + v);
+                        if (x2 >= imgHeight)
+                        {
+                            x2 = imgHeight - 1;
+                        }
+                        if (y2 >= imgWidth)
+                        {
+                            y2 = imgWidth - 1;
+                        }
+                        int c1 = srcImg.getRGB(y1, x1), c2 = srcImg.getRGB(y2, x1), c3 = srcImg.getRGB(y1, x2), c4 = srcImg.getRGB(y2, x2);
+                        Pixel pixel = new Pixel();
+                        pixel.red = (((c1 & 0xff0000) >> 16) + ((c2 & 0xff0000) >> 16) + ((c3 & 0xff0000) >> 16) + ((c4 & 0xff0000) >> 16)) / 4;
+                        pixel.green = (((c1 & 0xff00) >> 8) + ((c2 & 0xff00) >> 8) + ((c3 & 0xff00) >> 8) + ((c4 & 0xff00) >> 8)) / 4;
+                        pixel.blue = ((c1 & 0xff) + (c2 & 0xff) + (c3 & 0xff) + (c4 & 0xff)) / 4;
+                        colors[i][j] = pixel;
+                    }
+                }
+                return colors;
+            }
+        }
+        return null;
     }
 
     public static double calculateSimilarity(int[][] matrix1, int[][] matrix2) {
